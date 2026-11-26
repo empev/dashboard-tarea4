@@ -52,6 +52,7 @@ Estos resultados corresponden al conjunto de datos estudiado y no deben interpre
 ## 7. Captura de pantalla
 
 En esta sección se incorpora una captura de pantalla del dashboard publicado para mostrar su funcionamiento y presentación visual.
+![Captura del dashboard interactivo](Evidencia_Dashboard_Publicado.png)
 
 ## 8. Tecnologías utilizadas
 
