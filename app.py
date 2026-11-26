@@ -38,9 +38,30 @@ archivo = Path(__file__).parent / "Significant Earthquakes 1965–2016.csv"
 def cargar_datos(ruta):
     datos = pd.read_csv(ruta)
 
+        # Validar las columnas necesarias
+    columnas_requeridas = [
+        "Magnitude",
+        "Depth",
+        "Date",
+        "Type"
+    ]
+
+    columnas_faltantes = [
+        columna
+        for columna in columnas_requeridas
+        if columna not in datos.columns
+    ]
+
+    if columnas_faltantes:
+        raise ValueError(
+            "Faltan columnas necesarias en el CSV: "
+            + ", ".join(columnas_faltantes)
+        )
+
     datos["Magnitude"] = pd.to_numeric(
         datos["Magnitude"], errors="coerce"
     )
+
     datos["Depth"] = pd.to_numeric(
         datos["Depth"], errors="coerce"
     )
@@ -50,6 +71,23 @@ def cargar_datos(ruta):
     )
 
     datos["Year"] = datos["Date"].dt.year
+    
+        # Validar que existan fechas válidas
+    if datos["Date"].notna().sum() == 0:
+        raise ValueError(
+            "No existen fechas válidas en la columna Date."
+        )
+
+        # Validar que existan magnitudes numéricas válidas
+    if datos["Magnitude"].notna().sum() == 0:
+        raise ValueError(
+            "No existen valores numéricos válidos en la columna Magnitude."
+        )
+        # Validar que existan profundidades numéricas válidas
+    if datos["Depth"].notna().sum() == 0:
+        raise ValueError(
+            "No existen valores numéricos válidos en la columna Depth."
+        )
 
     return datos
 
