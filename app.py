@@ -71,12 +71,6 @@ def cargar_datos(ruta):
     )
 
     datos["Year"] = datos["Date"].dt.year
-    
-        # Validar que existan fechas válidas
-    if datos["Date"].notna().sum() == 0:
-        raise ValueError(
-            "No existen fechas válidas en la columna Date."
-        )
 
         # Validar que existan magnitudes numéricas válidas
     if datos["Magnitude"].notna().sum() == 0:
@@ -292,12 +286,12 @@ st.subheader(
     "Comparación de magnitud: terremotos y explosiones nucleares"
 )
 
-grupo1 = filtrado.loc[
-    filtrado["Type"] == "Earthquake", "Magnitude"
+grupo1 = df.loc[
+    df["Type"] == "Earthquake", "Magnitude"
 ].dropna()
 
-grupo2 = filtrado.loc[
-    filtrado["Type"] == "Nuclear Explosion", "Magnitude"
+grupo2 = df.loc[
+    df["Type"] == "Nuclear Explosion", "Magnitude"
 ].dropna()
 
 if len(grupo1) >= 2 and len(grupo2) >= 2:
@@ -306,7 +300,7 @@ if len(grupo1) >= 2 and len(grupo2) >= 2:
         grupo2,
         equal_var=False
     )
-
+    st.write(f"Estadístico t: **{resultado.statistic:.4f}**")
     st.write(f"Valor p: **{resultado.pvalue:.4f}**")
     st.write("Nivel de significancia: **0.05**")
 
