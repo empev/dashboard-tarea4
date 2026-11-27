@@ -71,6 +71,12 @@ def cargar_datos(ruta):
     )
 
     datos["Year"] = datos["Date"].dt.year
+    
+        # Validar que existan fechas válidas
+    if datos["Date"].notna().sum() == 0:
+        raise ValueError(
+            "No existen fechas válidas en la columna Date."
+        )
 
         # Validar que existan magnitudes numéricas válidas
     if datos["Magnitude"].notna().sum() == 0:
